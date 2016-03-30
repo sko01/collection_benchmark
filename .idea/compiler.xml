@@ -25,5 +25,8 @@
         <module name="collection_benchmark" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="collection_benchmark" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>

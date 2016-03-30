@@ -1,0 +1,62 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util-3.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+    <aop:aspectj-autoproxy />
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="properties">
+            <util:properties>
+                <prop key="SIZE">1000000</prop>
+            </util:properties>
+        </property>
+    </bean>
+
+    <bean id="listTestImpl" class="ua.sko01.tests.list.impl.ListTestImpl">
+        <property name="SIZE" value="${SIZE}"/>
+    </bean>
+
+    <bean id="setTestImpl" class="ua.sko01.tests.set.impl.SetTestImpl">
+        <property name="SIZE" value="${SIZE}"/>
+    </bean>
+
+    <bean id="mapTestImpl" class="ua.sko01.tests.map.impl.MapTestImpl">
+        <property name="SIZE" value="${SIZE}" />
+    </bean>
+
+    <bean id="queueTestImpl" class="ua.sko01.tests.queue.impl.QueueTestImpl">
+        <property name="SIZE" value="${SIZE}"/>
+    </bean>
+
+    <bean id="listBenchmarkRunner" class="ua.sko01.helper.ListBenchmarkRunner">
+        <property name="listTest" ref="listTestImpl"/>
+    </bean>
+
+    <bean id="setBenchmarkRunner" class="ua.sko01.helper.SetBenchmarkRunner">
+        <property name="setTest" ref="setTestImpl"/>
+    </bean>
+
+    <bean id="mapBenchmarkRunner" class="ua.sko01.helper.MapBenchmarkRunner">
+        <property name="mapTest" ref="mapTestImpl" />
+    </bean>
+
+    <bean id="queueBenchmarkRunner" class="ua.sko01.helper.QueueBenchmarkRunner">
+        <property name="queueTest" ref="queueTestImpl"/>
+    </bean>
+
+    <bean id="benchmarkRunner" class="ua.sko01.helper.BenchmarkRunner">
+        <property name="listBenchmarkRunner" ref="listBenchmarkRunner"/>
+        <property name="setBenchmarkRunner" ref="setBenchmarkRunner"/>
+        <property name="mapBenchmarkRunner" ref="mapBenchmarkRunner"/>
+        <property name="queueBenchmarkRunner" ref="queueBenchmarkRunner"/>
+    </bean>
+
+    <bean id="timer" class="ua.sko01.aspect.Timer"/>
+</beans>
